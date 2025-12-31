@@ -1,13 +1,35 @@
 {
   "name": "angular-with-electron",
   "version": "0.0.0",
+  "main": "main.js",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "serve:ssr:AngularWithElectron": "node dist/AngularWithElectron/server/server.mjs"
+    "serve:ssr:AngularWithElectron": "node dist/AngularWithElectron/server/server.mjs",
+    "electron": "electron .",
+    "build:electron": "ng build --base-href ./ && electron .",
+    "electron:serve": "concurrently \"ng serve\" \"wait-on http://localhost:4200 && electron .\"",
+    "electron:build": "ng build --base-href ./ && electron-builder",
+    "package": "electron-builder"
+  },
+  "build": {
+    "appId": "com.exemplo.meuapp",
+    "productName": "Meu App Incrível",
+    "win": {
+      "target": ["dir"],
+      "icon": "src/assets/icon.ico"
+    },
+    "files": [
+      "dist/**/*", 
+      "main.js",  
+      "package.json" 
+    ],
+    "directories": {
+      "output": "release" 
+    }
   },
   "prettier": {
     "printWidth": 100,
@@ -42,8 +64,12 @@
     "@angular/compiler-cli": "^21.0.0",
     "@types/express": "^5.0.1",
     "@types/node": "^20.17.19",
+    "concurrently": "^9.2.1",
+    "electron": "^39.2.7",
+    "electron-builder": "^26.0.12",
     "jsdom": "^27.1.0",
     "typescript": "~5.9.2",
-    "vitest": "^4.0.8"
+    "vitest": "^4.0.8",
+    "wait-on": "^9.0.3"
   }
 }
