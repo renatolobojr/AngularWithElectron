@@ -8,11 +8,16 @@ function createWindow() {
   win = new BrowserWindow({
     width: 800,
     height: 600,
+    resizable: false, 
+    maximizable: false,
+    useContentSize: true,
     webPreferences: {
       nodeIntegration: true,
       contextIsolation: false
     }
   });
+
+  win.setMenu(null);
 
   const isDev = process.argv.slice(2).some(arg => arg === '--serve');
 
